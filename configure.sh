@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # Command to run wp-cli in docker
-WP_CLI="docker exec -it aga-congress-2026_wp-cli_1 wp"
+WP_CLI="docker exec -it aga-congress-2026-wp-cli-1 wp"
 
 # Install core site with default credentials
 $WP_CLI core install --url=http://localhost --title="U.S. Go Congress" --admin_user=admin --admin_password=password --admin_email=admin@admin.example
