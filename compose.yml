@@ -39,6 +39,7 @@ services:
       - WORDPRESS_DB_USER=wordpress
       - WORDPRESS_DB_PASSWORD=wordpress
       - WORDPRESS_DB_NAME=wordpress
+      - WP_CLI_CACHE_DIR=/tmp/wp-cli-cache
     volumes:
       - wp_data:/var/www/html/
       - ./import_data:/import_data
