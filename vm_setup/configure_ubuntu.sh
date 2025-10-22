@@ -1,9 +1,9 @@
 #!/bin/bash
 
 # Configure bash history
-sudo echo 'export PROMPT_COMMAND="history -a; history -c; history -r; $PROMPT_COMMAND"' >> /etc/bashrc
-sudo echo 'export HISTSIZE=10000' >> /etc/bashrc
-sudo echo 'export HISTFILESIZE=10000' >> /etc/bashrc
+sudo echo 'export PROMPT_COMMAND="history -a; history -c; history -r; $PROMPT_COMMAND"' >> ~/.bashrc
+sudo echo 'export HISTSIZE=10000' >> ~/.bashrc
+sudo echo 'export HISTFILESIZE=10000' >> ~/.bashrc
 
 ### DEPENDENCIES
 
