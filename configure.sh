@@ -17,9 +17,19 @@ echo "Database ready!"
 ADMIN_USERNAME="admin"
 ADMIN_EMAIL="webmaster@gocongress.org"
 GOCONGRESS_URL="https://gc2026.gocongress.org"
-# prompt for admin password
-read -s -p "Admin password: " ADMIN_PASSWORD
-echo
+# Prompt for admin password with double verification
+while true; do
+    read -s -p "Admin password: " ADMIN_PASSWORD
+    echo
+    read -s -p "Confirm password: " ADMIN_PASSWORD_CONFIRM
+    echo
+
+    if [ "$ADMIN_PASSWORD" = "$ADMIN_PASSWORD_CONFIRM" ]; then
+        break
+    else
+        echo "Passwords do not match. Please try again."
+    fi
+done
 
 BASE_CMD="docker exec -it $CLI_CONTAINER "
 
