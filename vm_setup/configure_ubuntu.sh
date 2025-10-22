@@ -43,7 +43,7 @@ if ! command -v certbot &>/dev/null; then
     sudo ln -s /opt/certbot/bin/certbot /usr/bin/certbot
     sudo certbot --nginx --non-interactive --agree-tos \
       -d gc2026.gocongress.org \
-      -m admin@eradeo.com # TODO change to webmaster@gocongress.org once redirect to current webmaster is complete
+      -m gocongress@nokel.org # TODO change to webmaster@gocongress.org once redirect to current webmaster is complete
     # job to automatically renew cert and trigger nginx reload when renewed:
     echo "0 0,12 * * * root /opt/certbot/bin/python -c 'import random; import time; time.sleep(random.random() * 3600)' && sudo certbot renew -q --deploy-hook 'systemctl reload nginx'" | sudo tee -a /etc/crontab > /dev/null
     # job to once a month upgrade certbot:
