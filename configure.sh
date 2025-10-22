@@ -2,8 +2,17 @@
 
 docker compose -p aga-congress-2026 up -d
 
-# Command to run wp-cli in docker
 CLI_CONTAINER="aga-congress-2026-wp-cli-1"
+
+# Wait for WP to be ready
+echo "Waiting for WordPress..."
+until docker exec -i "$CLI_CONTAINER" wp core is-installed >/dev/null 2>&1; do
+    echo -n "."
+    sleep 3
+done
+
+# Command to run wp-cli in docker
+
 ADMIN_USERNAME="admin"
 ADMIN_EMAIL="webmaster@gocongress.org"
 GOCONGRESS_URL="https://gc2026.gocongress.org"
@@ -21,19 +30,6 @@ docker exec -i "$CLI_CONTAINER" bash -c \
 $ADMIN_PASSWORD
 EOF
 unset ADMIN_PASSWORD
-
-# Wait for DB
-until docker exec -i aga-congress-2026-db-1 mysql -u"$MYSQL_USER" -p"$MYSQL_PASSWORD" -e "SELECT 1;" wordpress >/dev/null 2>&1; do
-    echo "Waiting for DB..."
-    sleep 2
-done
-
-# Wait for WP to be ready
-echo "Waiting for WordPress..."
-until docker exec -i "$CLI_CONTAINER" wp core is-installed >/dev/null 2>&1; do
-    echo -n "."
-    sleep 3
-done
 
 # Import our pages
 $BASE_CMD wp plugin install wordpress-importer --activate
