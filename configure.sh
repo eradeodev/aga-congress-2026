@@ -10,9 +10,10 @@ $WP_CLI core install --url=http://localhost --title="U.S. Go Congress" --admin_u
 $WP_CLI plugin install wordpress-importer --activate
 $WP_CLI import /import_data/base_pages.xml --authors=create
 
-# Install blocksy theme and plugin
-$WP_CLI theme install blocksy --activate
-$WP_CLI plugin install blocksy-companion --activate
+# Install kadence theme and plugins
+$WP_CLI theme install kadence --activate
+$WP_CLI plugin install stackable-ultimate-gutenberg-blocks --activate
+$WP_CLI plugin install wp-super-cache --activate
 
 # Make front page show a static page instead of blog posts, and set it to our home page
 $WP_CLI option update show_on_front 'page'
