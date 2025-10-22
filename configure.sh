@@ -22,6 +22,19 @@ $ADMIN_PASSWORD
 EOF
 unset ADMIN_PASSWORD
 
+# Wait for DB
+until docker exec -i aga-congress-2026-db-1 mysql -u"$MYSQL_USER" -p"$MYSQL_PASSWORD" -e "SELECT 1;" wordpress >/dev/null 2>&1; do
+    echo "Waiting for DB..."
+    sleep 2
+done
+
+# Wait for WP to be ready
+echo "Waiting for WordPress..."
+until docker exec -i "$CLI_CONTAINER" wp core is-installed >/dev/null 2>&1; do
+    echo -n "."
+    sleep 3
+done
+
 # Import our pages
 $BASE_CMD wp plugin install wordpress-importer --activate
 $BASE_CMD cp /import_data/base_pages.xml /var/www/html/base_pages.xml
