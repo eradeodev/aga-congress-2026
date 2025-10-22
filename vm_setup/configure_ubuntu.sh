@@ -75,7 +75,7 @@ EOF
 fi
 
 # configure the firewall
-sudo ufw enable
-sudo ufw allow 22
+sudo ufw allow 22 # allow SSH first
 sudo ufw allow 80
 sudo ufw allow 443
+sudo ufw --force enable # enable firewall last non-interactively
