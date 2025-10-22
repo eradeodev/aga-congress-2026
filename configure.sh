@@ -1,5 +1,7 @@
 #!/bin/bash
 
+docker compose -p aga-congress-2026 up -d
+
 # Command to run wp-cli in docker
 CLI_CONTAINER="aga-congress-2026-wp-cli-1"
 ADMIN_USERNAME="admin"
