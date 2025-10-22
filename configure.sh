@@ -36,7 +36,7 @@ BASE_CMD="docker exec -it $CLI_CONTAINER "
 # Install core site with default credentials
 # Use non-tty docker exec (-i, not -t) and pass the password via stdin to the container
 docker exec -i "$CLI_CONTAINER" bash -c \
-  'read -r PASS; wp core install --url="$3" --title="U.S. Go Congress" --admin_user="$1" --admin_password="$PASS" --admin_email="$2"' \
+  'read -r PASS; wp core install --skip-email --url="$3" --title="U.S. Go Congress" --admin_user="$1" --admin_password="$PASS" --admin_email="$2"' \
   -- "$ADMIN_USERNAME" "$ADMIN_EMAIL" "$GOCONGRESS_URL" <<EOF
 $ADMIN_PASSWORD
 EOF
@@ -49,6 +49,30 @@ until docker exec -i "$CLI_CONTAINER" env HTTP_HOST="gc2026.gocongress.org" wp c
     sleep 3
 done
 echo " WordPress is ready!"
+
+# Delete default content
+echo "Deleting default WordPress content..."
+
+# Delete all posts
+POST_IDS=$($BASE_CMD wp post list --post_type=post --field=ID)
+if [ -n "$POST_IDS" ]; then
+    echo "Deleting posts: $POST_IDS"
+    $BASE_CMD wp post delete $POST_IDS --force
+fi
+
+# Delete all pages
+PAGE_IDS=$($BASE_CMD wp post list --post_type=page --field=ID)
+if [ -n "$PAGE_IDS" ]; then
+    echo "Deleting pages: $PAGE_IDS"
+    $BASE_CMD wp post delete $PAGE_IDS --force
+fi
+
+# Delete all comments
+COMMENT_IDS=$($BASE_CMD wp comment list --field=ID)
+if [ -n "$COMMENT_IDS" ]; then
+    echo "Deleting comments: $COMMENT_IDS"
+    $BASE_CMD wp comment delete $COMMENT_IDS --force
+fi
 
 # Import our pages
 $BASE_CMD wp plugin install wordpress-importer --activate
