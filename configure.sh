@@ -10,7 +10,7 @@ $BASE_CMD wp core install --url=http://localhost --title="U.S. Go Congress" --ad
 
 # Import our pages
 $BASE_CMD wp plugin install wordpress-importer --activate
-$BASE_CMD cp /import_data/base_pages.xml /var/www/html/base_bages.xml
+$BASE_CMD cp /import_data/base_pages.xml /var/www/html/base_pages.xml
 $BASE_CMD wp import /var/www/html/base_pages.xml --authors=create
 
 # Install kadence theme and plugins
