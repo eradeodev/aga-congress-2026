@@ -6,10 +6,11 @@ CLI_CONTAINER="aga-congress-2026-wp-cli-1"
 
 # Wait for WP to be ready
 echo "Waiting for WordPress..."
-until docker exec -i "$CLI_CONTAINER" wp core is-installed >/dev/null 2>&1; do
+until docker exec -i "$CLI_CONTAINER" env HTTP_HOST="gc2026.gocongress.org" wp core is-installed >/dev/null 2>&1; do
     echo -n "."
     sleep 3
 done
+echo " WordPress is ready!"
 
 # Command to run wp-cli in docker
 
