@@ -4,11 +4,12 @@
 CLI_CONTAINER="aga-congress-2026-wp-cli-1"
 ADMIN_USERNAME="admin"
 ADMIN_PASSWORD="password"
+ADMIN_EMAIL="admin@admin.example"
 
 BASE_CMD="docker exec -it $CLI_CONTAINER "
 
 # Install core site with default credentials
-$BASE_CMD wp core install --url=http://localhost --title="U.S. Go Congress" --admin_user="$ADMIN_USERNAME" --admin_password="$ADMIN_PASSWORD" --admin_email=admin@admin.example
+$BASE_CMD wp core install --url=http://localhost --title="U.S. Go Congress" --admin_user="$ADMIN_USERNAME" --admin_password="$ADMIN_PASSWORD" --admin_email="$ADMIN_EMAIL"
 
 # Import our pages
 $BASE_CMD wp plugin install wordpress-importer --activate
