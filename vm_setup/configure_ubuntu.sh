@@ -13,6 +13,13 @@ sudo apt install -y git python3 python3-dev python3-venv libaugeas-dev gcc nginx
 sudo systemctl enable --now nginx
 
 # Configure Nginx
+cat <<EOF | sudo tee /etc/nginx/conf.d/http-maps.conf > /dev/null
+map \$query_string \$cache_control_header {
+    "~ver=" "public, max-age=31536000, immutable";
+    default "";  # no Cache-Control for non-versioned assets
+}
+EOF
+
 cat <<EOF | sudo tee /etc/nginx/conf.d/gc2026.gocongress.org.conf > /dev/null
 server {
     listen 80;
@@ -30,6 +37,8 @@ server {
         proxy_send_timeout          3600;
         proxy_read_timeout          3600;
         send_timeout                3600;
+        # Only set Cache-Control for versioned assets
+        add_header Cache-Control \$cache_control_header;
     }
 }
 EOF
@@ -46,6 +55,9 @@ if ! command -v certbot &>/dev/null; then
     echo "0 0,12 * * * root /opt/certbot/bin/python -c 'import random; import time; time.sleep(random.random() * 3600)' && sudo certbot renew -q --deploy-hook 'systemctl reload nginx'" | sudo tee -a /etc/crontab > /dev/null
     # job to once a month upgrade certbot:
     echo "0 3 1 * * root /opt/certbot/bin/pip install --upgrade certbot certbot-nginx > /var/log/certbot_update.log 2>&1" | sudo tee -a /etc/crontab > /dev/null
+    # Enable HTTP/2 in Certbot-generated config
+    sudo sed -i 's/listen 443 ssl;/listen 443 ssl http2;/' /etc/nginx/conf.d/gc2026.gocongress.org.conf
+    sudo nginx -t && sudo systemctl reload nginx
 fi
 
 # Install/configure Docker
