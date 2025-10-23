@@ -130,3 +130,6 @@ $BASE_CMD wp plugin install wp-super-cache --activate
 # Make front page show a static page instead of blog posts, and set it to our home page
 $BASE_CMD wp option update show_on_front 'page'
 $BASE_CMD wp option update page_on_front 5
+
+# Show user URL for admin login
+echo "Log in to admin panel at $GOCONGRESS_URL/wp-admin"
