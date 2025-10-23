@@ -1,12 +1,12 @@
 #!/bin/bash
 
-docker compose -p aga-congress-2026 up -d
+docker compose -p aga-congress up -d
 
-CLI_CONTAINER="aga-congress-2026-wp-cli-1"
+CLI_CONTAINER="aga-congress-wp-cli-1"
 
 # Wait for MariaDB to be ready
 echo "Waiting for database..."
-until docker exec -i aga-congress-2026-db-1 mysql -uwordpress -pwordpress -e "SELECT 1;" wordpress >/dev/null 2>&1; do
+until docker exec -i aga-congress-db-1 mysql -uwordpress -pwordpress -e "SELECT 1;" wordpress >/dev/null 2>&1; do
     echo -n "."
     sleep 3
 done
@@ -15,8 +15,51 @@ echo "Database ready!"
 # Command to run wp-cli in docker
 
 ADMIN_USERNAME="admin"
-ADMIN_EMAIL="webmaster@gocongress.org"
-GOCONGRESS_URL="https://gc2026.gocongress.org"
+
+# Prompt for admin email with double verification
+DEFAULT_EMAIL="admin@example.test"
+while true; do
+    read -p "Admin email (leave blank for $DEFAULT_EMAIL): " ADMIN_EMAIL
+
+    # Use default if blank
+    if [ -z "$ADMIN_EMAIL" ]; then
+        ADMIN_EMAIL="$DEFAULT_EMAIL"
+        echo "Using default email: $ADMIN_EMAIL"
+        break
+    fi
+
+    read -p "Confirm admin email: " ADMIN_EMAIL_CONFIRM
+
+    if [ "$ADMIN_EMAIL" = "$ADMIN_EMAIL_CONFIRM" ]; then
+        echo "Email confirmed: $ADMIN_EMAIL"
+        break
+    else
+        echo "Emails do not match. Please try again."
+    fi
+done
+
+# URL prompt
+DEFAULT_URL="http://localhost:11434"
+while true; do
+    read -p "GOCONGRESS URL (leave blank for $DEFAULT_URL): " GOCONGRESS_URL
+
+    # Use default if blank
+    if [ -z "$GOCONGRESS_URL" ]; then
+        GOCONGRESS_URL="$DEFAULT_URL"
+        echo "Using default URL: $GOCONGRESS_URL"
+        break
+    fi
+
+    read -p "Confirm URL: " GOCONGRESS_URL_CONFIRM
+
+    if [ "$GOCONGRESS_URL" = "$GOCONGRESS_URL_CONFIRM" ]; then
+        echo "URL confirmed: $GOCONGRESS_URL"
+        break
+    else
+        echo "URLs do not match. Please try again."
+    fi
+done
+
 # Prompt for admin password with double verification
 while true; do
     read -s -p "Admin password: " ADMIN_PASSWORD
@@ -44,7 +87,7 @@ unset ADMIN_PASSWORD
 
 # Wait for WP to be ready
 echo "Waiting for WordPress..."
-until docker exec -i "$CLI_CONTAINER" env HTTP_HOST="gc2026.gocongress.org" wp core is-installed >/dev/null 2>&1; do
+until docker exec -i "$CLI_CONTAINER" env wp core is-installed >/dev/null 2>&1; do
     echo -n "."
     sleep 3
 done
