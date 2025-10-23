@@ -1,9 +1,9 @@
 services:
   db:
     # We use a mariadb image which supports both amd64 & arm64 architecture
+    # Postgres was also considered (due to it being our preferred choice for the Registration DB),
+    # however as it requires a plugin for WP to use it our current preference is to keep them separate.
     image: mariadb:10.6.4-focal
-    # If you really want to use MySQL, uncomment the following line
-    #image: mysql:8.0.27
     command: '--default-authentication-plugin=mysql_native_password'
     volumes:
       - db_data:/var/lib/mysql
