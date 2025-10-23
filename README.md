@@ -42,14 +42,4 @@
 - **WordPress Plugins:**  
   - **Stackable – Gutenberg Blocks:** Adds blocks, patterns, and pre-built full page designs  
   - **WP Super Cache:** Server-side page caching; cut local page load time in half  
-  - **Performance Lab:** Enabled features:  
-    - Embed Optimizer  
-    - Enhanced Responsive Images  
-    - Image Placeholders  
-    - Image Prioritizer  
-    - Instant Back/Forward  
-    - Modern Image Formats  
-    - Speculative Loading  
-  - **WP Activity Log:**  
-    - Disabled “Weekly Activity log highlights email”  
-    - Set activity log retention to delete events older than 3 months  
+  - **Performance Lab:** Client-side optimizations
