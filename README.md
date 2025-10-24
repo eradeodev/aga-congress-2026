@@ -12,34 +12,19 @@
 3. Run `configure.sh` and specify the WP admin email/password when prompted, and leaving the URL blank (default) 
 4. Done! Access site from http://localhost:11434/wp-admin
 
-## WordPress Setup Steps (after `configure.sh`)
-(Note: we eventually want to automate this)
-
-1. **Customize Theme:**
-    - Customize → Homepage Settings → set Homepage to Home → Publish
-    - Customize → Footer → remove “{theme-credit}” → Publish
-
-2. **WP Super Cache Settings:**
-    - Settings → WP Super Cache → Enable “Caching On” → Update Status
-    - Advanced → Enable “304 Browser caching” and “Mobile device support” → Update Status
-    - Preload → Enable “Preload mode” and “Preload tags” → Preload Cache Now → Save Settings
-
-3. **Delete Unused Plugins:** ‘Hello Dolly’ and ‘Akismet Anti-spam Protection’
-
-
 # Site Design and Architecture
 
 ## Web Design Choices
 
-- **Base Image:** Official [WordPress.org](http://WordPress.org) Docker image  
-- **Theme:** Kadence  
-  - Selected as a balance of popularity and a full-featured free version  
-  - Alternatives evaluated:  
-    - Blocksy – less featureful free version, newer, less popular  
-    - Astra – fewer features in free version, most popular paid option  
-    - Twenty Twenty-Five – too basic, not well-rated  
+- **Base Image:** Official [WordPress.org](http://WordPress.org) Docker image
+- **Theme:** Kadence
+  - Selected as a balance of popularity and a full-featured free version
+  - Alternatives evaluated:
+    - Blocksy – less featureful free version, newer, less popular
+    - Astra – fewer features in free version, most popular paid option
+    - Twenty Twenty-Five – too basic, not well-rated
 
-- **WordPress Plugins:**  
-  - **Stackable – Gutenberg Blocks:** Adds blocks, patterns, and pre-built full page designs  
-  - **WP Super Cache:** Server-side page caching; cut local page load time in half  
+- **WordPress Plugins:**
+  - **Stackable – Gutenberg Blocks:** Adds blocks, patterns, and pre-built full page designs
+  - **WP Super Cache:** Server-side page caching
   - **Performance Lab:** Client-side optimizations
