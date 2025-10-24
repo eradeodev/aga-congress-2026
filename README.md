@@ -33,6 +33,9 @@
     * *Astra:* limited free features, seemed primarily geared toward paid tiers.
     * *Twenty Twenty-Five:* too minimal, not especially popular.
 * **Plugins:**
-  * **Stackable – Gutenberg Blocks:** adds blocks, patterns, and pre-built designs.
-  * **WP Super Cache:** improves load times with server-side caching.
-  * **Performance Lab:** enhances client-side performance optimizations.
+  * **Minimal plugin philosophy:**
+    The Go Congress website's functionality requirements are modest. In many WordPress installations, excessive or redundant plugins increase maintenance overhead and expand the potential surface area for security or compatibility issues. To avoid this, we aim to keep the plugin set minimal and focused on core needs.
+  * **Plugins being used:**
+    * **Stackable - Gutenberg Blocks:** Adds layout blocks, patterns, and prebuilt designs to simplify content creation.
+    * **WP Super Cache:** Provides server-side page caching for faster load times.
+    * **Performance Lab:** Adds client-side performance optimizations from the WordPress core team.
